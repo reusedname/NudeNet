@@ -17,7 +17,7 @@ VERSION = "3.4.2"
 # What packages are required for this module to be executed?
 REQUIRED = [
     "numpy",
-    "onnxruntime",
+    "onnxruntime-gpu",
     "opencv-python-headless",
 ]
 

@@ -144,12 +144,13 @@ def _postprocess(
 
 
 class NudeDetector:
-    def __init__(self, model_path=None, providers=None, inference_resolution=320):
+    def __init__(self, model_path=None, providers=None, inference_resolution=320):        
         self.onnx_session = onnxruntime.InferenceSession(
             os.path.join(os.path.dirname(__file__), "320n.onnx")
             if not model_path
             else model_path,
-            # providers=C.get_available_providers() if not providers else providers,
+            # providers=onnxruntime.get_available_providers() if not providers else providers,
+            providers=providers
         )
         model_inputs = self.onnx_session.get_inputs()
 
@@ -276,6 +277,9 @@ class NudeDetector:
 
         return output_path
 
+
+# necessary to use cuda in venv (installed locally by pytorch) instead of system (potentially incompatible) libraries
+onnxruntime.preload_dlls()
 
 if __name__ == "__main__":
     detector = NudeDetector()
